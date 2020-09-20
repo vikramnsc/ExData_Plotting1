@@ -35,21 +35,17 @@ EnergyData$Sub_metering_2<- as.numeric (EnergyData$Sub_metering_2)
 # for data analysis; The subset data will be called EnergyData_subset
 EnergyData_sub<-subset(EnergyData, Date== "2007-02-01" | Date== "2007-02-02")
 summary(EnergyData_sub)
+
 str(EnergyData_sub)
 
-#Creating the plot3 between 
+#Creating Plot4
 
-with(EnergyData_sub, plot(DateTime, Sub_metering_1, type="o", xlab="Weekday", ylab="Energy sub metering"))
-lines(EnergyData_sub$DateTime, EnergyData_sub$Sub_metering_2, type="o", col= "red")
+par(mfrow= c(2,2))
+with(EnergyData_sub, plot(DateTime, Global_active_power, type="h", xlab="", ylab="Global Active Power"))
+with(EnergyData_sub, plot(DateTime, Voltage, type="h", xlab="Date-Time", ylab="Voltage"))
+with(EnergyData_sub, plot(EnergyData_sub$DateTime, EnergyData_sub$Sub_metering_1, type="o", xlab="", ylab="Energy sub metering"))
+lines(EnergyData_sub$DateTime, EnergyData_sub$Sub_metering_2, type="o", col="red")
 lines(EnergyData_sub$DateTime, EnergyData_sub$Sub_metering_3, type="o", col="blue")
-legend(c("topright"), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lwd=3, lty=1, col=c("black", "red", "blue"))
-     
+legend(c("topright"), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty=1, lwd=3, col=c("black", "red", "blue"))
+with(EnergyData_sub, plot(DateTime, Global_reactive_power, type="o", xlab="DateTime", ylab="Global_reactive_power"))
 
-plot3<- function() {
-     png(filename= "Plot3.png")
-    with(EnergyData_sub, plot(DateTime, Sub_metering_1, type="o", xlab="Weekday", ylab="Energy sub metering"))
-lines(EnergyData_sub$DateTime, EnergyData_sub$Sub_metering_2, type="o", col= "red")
-lines(EnergyData_sub$DateTime, EnergyData_sub$Sub_metering_3, type="o", col="blue")
-legend(c("topright"), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lwd=3, lty=1, col=c("black", "red", "blue"))
-     dev.off()
-     }
